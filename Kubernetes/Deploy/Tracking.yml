@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trackingapp
+  labels:
+    app: tracking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tracking
+  template:
+    metadata:
+      labels:
+        app: tracking
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "trackingapp"
+        dapr.io/enable-api-logging: "true"
+        dapr.io/app-port: "9053"
+    spec:
+      containers:
+      - name: tracking
+        image: acrazurecloudnative.azurecr.io/tracking:1.0

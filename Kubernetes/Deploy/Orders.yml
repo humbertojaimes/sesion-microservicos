@@ -1,0 +1,42 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ordersapp
+  labels:
+    app: orders
+spec:
+  selector:
+    app: orders
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 9051
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ordersapp
+  labels:
+    app: orders
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders
+  template:
+    metadata:
+      labels:
+        app: orders
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "ordersapp"
+        dapr.io/enable-api-logging: "true"
+    spec:
+      containers:
+      - name: orders
+        image: acrazurecloudnative.azurecr.io/orders:1.0
+        ports:
+        - containerPort: 9051
+        imagePullPolicy: Always
