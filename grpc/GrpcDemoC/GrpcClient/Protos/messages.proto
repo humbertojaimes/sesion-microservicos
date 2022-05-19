@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option go_package = "grpcdemo/pb";
+option csharp_namespace = "Messages";
+
+message Student {
+  int32 id = 1;
+  string firstName = 3;
+  string lastName = 4;
+}
+
+message GetAllStudentsRequest {}
+
+message GetStudentByIdRequest {
+  int32 Id = 1;
+}
+message StudentRequest {
+  Student student = 1;
+}
+message StudentResponse {
+  Student student = 1;
+}
+message AddPhotoRequest {
+  bytes data = 1;
+}
+message AddPhotoResponse {
+  bool isUploaded = 1;
+}
+
+service StudentService {
+  rpc GetStudentById (GetStudentByIdRequest) returns (StudentResponse);
+  rpc GetAllStudents (GetAllStudentsRequest) returns (stream StudentResponse);
+  rpc AddStudent (StudentRequest) returns (StudentResponse);
+  rpc SaveAllStudents (stream StudentRequest) returns (stream StudentResponse);
+  rpc AddPhoto (stream AddPhotoRequest) returns (AddPhotoResponse);
+}

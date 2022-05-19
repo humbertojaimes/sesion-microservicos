@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Protos\messages.proto" />
+    <None Remove="Protos\" />
+    <None Remove="Grpc" />
+    <None Remove="Grpc.Core" />
+    <None Remove="Google.Protobuf" />
+    <None Remove="Grpc.Net.Client" />
+    <None Remove="Grpc.Tools" />
+  </ItemGroup>
+  <ItemGroup>
+    <Protobuf Include="Protos\messages.proto" GrpcServices="Server">
+      <Access>Public</Access>
+      <ProtoCompile>True</ProtoCompile>
+      <ProtoRoot></ProtoRoot>
+      <CompileOutputs>True</CompileOutputs>
+      <OutputDir>obj\Debug\net6.0\</OutputDir>
+      <Generator>MSBuild:Compile</Generator>
+    </Protobuf>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Protos\" />
+  </ItemGroup>
+   <ItemGroup>
+    <Protobuf Include="Protos\messages.proto" GrpcServices="Client" />
+  </ItemGroup>
+   <ItemGroup>
+     <PackageReference Include="Google.Protobuf" Version="3.19.3" />
+     <PackageReference Include="Grpc.Net.Client" Version="2.41.0" />
+     <PackageReference Include="Grpc.Tools" Version="2.43.0">
+       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+       <PrivateAssets>all</PrivateAssets>
+     </PackageReference>
+   </ItemGroup>
+   <ItemGroup>
+     <None Update="dotnet.jpg">
+       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+     </None>
+   </ItemGroup>
+</Project>
